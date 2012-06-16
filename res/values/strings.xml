@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, Gw2rageActivity!</string>
+    <string name="hello">Bienvenu sur le hall de guilde Rage!</string>
     <string name="app_name">Guild Wars 2 - Rage Guilde</string>
-
+    <string name="curr_event">Evènements en cours</string>
+    <string name="next_event">Evènements à venir</string>
+    <string name="status">Statu de la guilde</string>
+    
 </resources>
