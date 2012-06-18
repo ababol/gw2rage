@@ -6,6 +6,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import org.apache.http.client.*;
+import org.apache.http.client.methods.*;
+import org.apache.http.HttpResponse;
+
 //import android.app.ActionBar;
 
 public class Gw2rageActivity extends Activity {
@@ -31,7 +35,18 @@ public class Gw2rageActivity extends Activity {
 		case R.id.menuitem1:
 			Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
 					.show();
+                        try{
+                            String lien = R.string.lien_status;//check the name
+                            HttpClient client = new DefaultHttpClient();
+                            HttpGet request = new HttpGet(lien);
+                            HttpResponse response = client.execute(request);
+                            Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT)
+					.show();
+                        }catch(Exception e){
+                            //@TODO voir les problèmes générés par URL
+                        }
                         setContentView(R.layout.status);
+                        
                         /**
                          * @TODO show here the score, number of members... of the guild
                          */
