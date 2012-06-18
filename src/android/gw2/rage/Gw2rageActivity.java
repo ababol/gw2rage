@@ -9,7 +9,7 @@ import android.widget.Toast;
 import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.HttpResponse;
-
+import org.apache.http.impl.client.DefaultHttpClient;
 //import android.app.ActionBar;
 
 public class Gw2rageActivity extends Activity {
@@ -36,7 +36,7 @@ public class Gw2rageActivity extends Activity {
 			Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
 					.show();
                         try{
-                            String lien = R.string.lien_status;//check the name
+                            String lien = "http://www.gw2rage.com/appli/status.php";//check the name
                             HttpClient client = new DefaultHttpClient();
                             HttpGet request = new HttpGet(lien);
                             HttpResponse response = client.execute(request);
