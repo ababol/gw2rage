@@ -3,17 +3,14 @@
 
     <item
         android:id="@+id/menuitem1"
-        android:showAsAction="ifRoom"
         android:title="@string/status">
     </item>
     <item
         android:id="@+id/menuitem2"
-        android:showAsAction="ifRoom"
         android:title="@string/curr_event">
     </item>
     <item
         android:id="@+id/menuitem2"
-        android:showAsAction="ifRoom"
         android:title="@string/next_event">
     </item>
 </menu>
