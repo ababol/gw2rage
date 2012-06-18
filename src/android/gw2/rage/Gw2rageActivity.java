@@ -31,6 +31,7 @@ public class Gw2rageActivity extends Activity {
 		case R.id.menuitem1:
 			Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
 					.show();
+                        setContentView(R.layout.status);
                         /**
                          * @TODO show here the score, number of members... of the guild
                          */
