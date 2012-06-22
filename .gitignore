@@ -1,3 +1,6 @@
 /gen/
 /nbandroid/
 /bin/
+/libs/ActionBarSherlock/gen/
+/libs/ActionBarSherlock/bin/
+/libs/ActionBarSherlock/nbandroid/
