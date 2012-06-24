@@ -12,6 +12,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import android.widget.TextView;
+//Decoment on debug
+import android.util.Log;
 /**
  *
  * @author isen
@@ -38,7 +40,9 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
                             }
 
                     } catch (Exception e) {
-                            e.printStackTrace();
+//                        Log.v("GetNetworkInfo",e.toString());
+                        
+                          //  e.printStackTrace();
                     }
             }
             return response;
@@ -46,6 +50,12 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
 
     @Override
     protected void onPostExecute(String result) {
-            textView.setText(result);
+           // textView.setText(result);
+        try{
+            this.textView.setText((CharSequence)result);
+        }catch(Exception e){
+            this.textView.setText(e.toString());
+            
+        }
     }
-    }
+}

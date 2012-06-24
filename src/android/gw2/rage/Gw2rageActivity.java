@@ -39,10 +39,9 @@ public class Gw2rageActivity extends Activity {
 		case R.id.menuitem1:
 			Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
 					.show();
-                        
+                        setContentView(R.layout.status);
                         try{
                             String lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
-                           
                             GetNetworkInfo task = new GetNetworkInfo((TextView) findViewById(R.id.TextView01));
                             task.execute(new String[] { lien });
                            
@@ -53,7 +52,7 @@ public class Gw2rageActivity extends Activity {
 					.show();
                             //@TODO voir les problèmes générés par URL
                         }
-                        setContentView(R.layout.status);
+                        
                         
                         /**
                          * @TODO show here the score, number of members... of the guild
