@@ -24,6 +24,10 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
        this.textView = tv;
     }
     @Override
+    protected void onPreExecute(){
+        this.textView.setText("Recherche en cours, veuillez patienter");
+    }
+    @Override
     protected String doInBackground(String... urls) {
             String response = "";
             for (String url : urls) {
@@ -40,9 +44,8 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
                             }
 
                     } catch (Exception e) {
-//                        Log.v("GetNetworkInfo",e.toString());
-                        
-                          //  e.printStackTrace();
+                        Log.v("Network", e.toString());
+                        cancel(true);
                     }
             }
             return response;
@@ -50,12 +53,12 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
 
     @Override
     protected void onPostExecute(String result) {
-           // textView.setText(result);
-        try{
-            this.textView.setText((CharSequence)result);
-        }catch(Exception e){
-            this.textView.setText(e.toString());
+        this.textView.setText(result);
             
-        }
+    }
+    @Override
+    protected void onCancelled(){
+        this.textView.setError("Impossible de se connecter");
+        this.textView.setText("Impossible de se connecter");
     }
 }

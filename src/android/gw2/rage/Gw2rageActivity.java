@@ -41,7 +41,7 @@ public class Gw2rageActivity extends Activity {
 					.show();
                         setContentView(R.layout.status);
                         try{
-                            String lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
+                            String lien = "http://91.121.96.88/rage/appli/status.php";//check the name
                             GetNetworkInfo task = new GetNetworkInfo((TextView) findViewById(R.id.TextView01));
                             task.execute(new String[] { lien });
                            
