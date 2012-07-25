@@ -15,7 +15,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import android.gw2.rage.GetNetworkInfo;
 //import android.app.ActionBar;
 //Decoment on debug
 import android.util.Log;
@@ -35,38 +34,51 @@ public class Gw2rageActivity extends Activity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String lien;
+        JSONDatasHandler handler;
+        int layout;
+        int idTv;
+        TextView resultTv;
 		switch (item.getItemId()) {
 		case R.id.menuitem1:
-			Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
-					.show();
-                        setContentView(R.layout.status);
-                        try{
-                            String lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
-                            GetNetworkInfo task = new GetNetworkInfo((TextView) findViewById(R.id.TextView01));
-                            task.execute(new String[] { lien });
-                           
-                        }catch(Exception e){
-                            Log.v("net level",e.toString());
-                             Toast.makeText(this, "we did not made it :"+e.getClass() +" levée à la ligne "
-                                     +e.toString(), Toast.LENGTH_LONG)
-					.show();
-                            //@TODO voir les problèmes générés par URL
-                        }
-                        
-                        
-                        /**
-                         * @TODO show here the score, number of members... of the guild
-                         */
-			break;
-		/*case R.id.menuitem2:
-			Toast.makeText(this, R.string.curr_event, Toast.LENGTH_SHORT)
-					.show();
-			break;
-*/
-		default:
-			break;
-		}
+                    Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
+                                    .show();
+                    layout = R.layout.status;
 
+                    lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
+                    handler = new StatusManager();
+                    idTv = R.id.TextView01;
+
+
+
+                    /**
+                        * @TODO show here the score, number of members... of the guild
+                        */
+                    break;
+		case R.id.menuitem2:
+                    lien = "http://www.guildwars2-rage.com/rage/site/api/event/";
+                    handler = new EventManager();
+                    idTv = R.id.TextView02;
+                    layout = R.layout.events;
+                    break;
+                    
+		default:
+                    lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
+                    handler = new StatusManager();
+                    layout = R.layout.status;
+                    idTv = R.id.TextView01;  
+                    break;
+		}
+                try{
+                    setContentView(layout);
+                    resultTv = (TextView) findViewById(idTv);
+
+                    GetNetworkInfo task = new GetNetworkInfo(resultTv, handler);
+                    task.execute(new String[] { lien });
+                            
+                }catch(Exception e){
+                    Log.v("Menu", e.toString());
+                }
 		return true;
 	}
     
