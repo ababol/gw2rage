@@ -1,5 +1,6 @@
 package android.gw2.rage;
 
+import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,13 +9,10 @@ import org.json.JSONObject;
  * @author artragis
  */
 public class MemberManager implements JSONDatasHandler{
-    public String handleArray(JSONArray ja){
-        String stringifiedList ="";
-        
-        
-        return stringifiedList;
+    public ArrayList<Object> handleArray(JSONArray ja){
+        return new ArrayList<Object>();
     }
-    public String handleObject(JSONObject jo){
+    public Object handleObject(JSONObject jo){
         return "";
     }
 }
