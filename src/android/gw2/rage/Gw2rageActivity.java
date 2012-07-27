@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
 //import android.app.ActionBar;
 //Decoment on debug
 import android.util.Log;
+import android.view.*;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 public class Gw2rageActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
@@ -37,49 +40,53 @@ public class Gw2rageActivity extends Activity {
         String lien;
         JSONDatasHandler handler;
         int layout;
-        int idTv;
-        TextView resultTv;
-		switch (item.getItemId()) {
-		case R.id.menuitem1:
-                    Toast.makeText(this, R.string.status, Toast.LENGTH_SHORT)
-                                    .show();
-                    layout = R.layout.status;
+        LayoutInflater li = (LayoutInflater) this.getLayoutInflater();
+        try{
+            ScrollView sv =new ScrollView(this);
+            
+            switch (item.getItemId()) {
+            case R.id.menuitem1:
+                layout = R.layout.status;
 
-                    lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
-                    handler = new StatusManager();
-                    idTv = R.id.TextView01;
-
+                lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
+                handler = new StatusManager();
 
 
-                    /**
-                        * @TODO show here the score, number of members... of the guild
-                        */
-                    break;
-		case R.id.menuitem2:
-                    lien = "http://www.guildwars2-rage.com/rage/site/api/event/";
-                    handler = new EventManager();
-                    idTv = R.id.TextView02;
-                    layout = R.layout.events;
-                    break;
-                    
-		default:
-                    lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
-                    handler = new StatusManager();
-                    layout = R.layout.status;
-                    idTv = R.id.TextView01;  
-                    break;
-		}
-                try{
-                    setContentView(layout);
-                    resultTv = (TextView) findViewById(idTv);
 
-                    GetNetworkInfo task = new GetNetworkInfo(resultTv, handler);
-                    task.execute(new String[] { lien });
+                /**
+                    * @TODO show here the score, number of members... of the guild
+                    */
+                break;
+            case R.id.menuitem2:
+                lien = "http://www.guildwars2-rage.com/rage/site/api/event/";
+                handler = new EventManager();
+                layout = R.layout.events;
+                break;
+
+            default:
+                lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
+                handler = new StatusManager();
+                layout = R.layout.status;
+                break;
+            }
+
+
+                setContentView(sv);
+                sv.removeAllViews();
+                
+                ViewGroup v = (ViewGroup)new LinearLayout(this);
+                
+                //sv.addView(v);
+                    sv.addView(v);
+
+                GetNetworkInfo task = new GetNetworkInfo(v,li, handler);
+                task.execute(new String[] { lien });
                             
-                }catch(Exception e){
-                    Log.v("Menu", e.toString());
-                }
+        }catch(Exception e){
+
+            Log.v("Menu", e.toString() +" "+e.getMessage());
+        }
 		return true;
-	}
+    }
     
 }

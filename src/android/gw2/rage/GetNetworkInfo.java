@@ -16,41 +16,46 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 //Decoment on debug
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import java.util.ArrayList;
+import java.util.ListIterator;
 /**
  *
  * @author isen
  */
-public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
-    private TextView textView;
-    private TextView error;
+public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Event>>{
+    private ViewGroup layout;
     private JSONDatasHandler handler;
+    private LayoutInflater inflater;
     /**
      * 
      * @param tv the text view where datas must be written, if an error rises
      * it will be written in this text view
      * @param handler will handle the response
      */
-    GetNetworkInfo(TextView tv,JSONDatasHandler handler){
-       this.textView = tv;
-       this.error = tv;
+    GetNetworkInfo(ViewGroup layout,LayoutInflater li,JSONDatasHandler handler){
+       this.layout = layout;
+       this.inflater = li;
        this.handler = handler;
     }
-    /**
-     * 
-     * @param tv the text view where datas must be written
-     * @param error if an error rises it will be written in this text view
-     */
-    GetNetworkInfo(TextView tv, TextView error,JSONDatasHandler handler){
-       this.textView = tv;
-       this.error = error;
-       this.handler = handler;
-    }
+  
     @Override
     protected void onPreExecute(){
-        this.textView.setText("Recherche en cours, veuillez patienter");
+        this.layout.removeAllViews();
+        Log.d("preExecute",this.layout.toString());
+        try{
+            TextView search = (TextView)new TextView(this.inflater.getContext());
+            this.layout.addView(search);
+            search.setText(R.string.recherche);
+        }catch(Exception e){
+            
+        }
     }
     @Override
-    protected String doInBackground(String... urls) {
+    protected ArrayList<Event> doInBackground(String... urls) {
             String response = "";
             for (String url : urls) {
                     DefaultHttpClient client = new DefaultHttpClient();
@@ -71,27 +76,45 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, String>{
                     }
             }
             try{
+                Log.d("network response", response);
                 JSONArray parsedResponse = new JSONArray(response);
-                response = this.handler.handleArray(parsedResponse);
-                if(response.equalsIgnoreCase("")){
-                    Log.v("JSON PARSING", "hum, what's happening?");
-                    cancel(true);
+                
+                ArrayList<Object>objects = this.handler.handleArray(parsedResponse);
+                ArrayList<Event> eventCollection = new ArrayList<Event>();
+                for(int i=0 ; i< objects.size(); i++ ){
+                    eventCollection.add((Event) objects.get(i));
                 }
+                return eventCollection;
             }catch (Exception e){
                 
                 Log.v("JSON parsing", "le JSON envoyé est mal formé "+e.toString());
             }
-            return response;
+            return new ArrayList<Event>();
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        this.textView.setText(result);
-            
+    protected void onPostExecute(ArrayList<Event> result) {
+        this.layout.removeAllViews();
+        ListIterator<Event> it = result.listIterator();
+        try{
+            while(it.hasNext()){
+                
+//                Log.d("affichage",this.inflater.toString());
+//                View temp = this.inflater.inflate(R.id.TextView01, null);
+//                Log.d("affichage",temp.toString());
+                TextView text =new TextView(this.inflater.getContext());
+                Log.d("affichage",text.toString());
+                text.setText(it.next().toString());
+                text.setFocusableInTouchMode(true);
+                
+                this.layout.addView(text);
+            }
+        }catch(Exception e){
+            Log.d("affichage", this.layout.toString());
+            Log.v("affichage", e.toString());
+        }
     }
     @Override
     protected void onCancelled(){
-        this.error.setError("Impossible de se connecter");
-        this.error.setText("Impossible de se connecter");
     }
 }

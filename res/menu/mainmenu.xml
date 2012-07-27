@@ -9,5 +9,6 @@
         android:id="@+id/menuitem2"
         android:title="@string/next_event">
     </item>
+    
 
 </menu>
