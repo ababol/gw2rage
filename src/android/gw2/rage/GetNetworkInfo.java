@@ -106,7 +106,6 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Event>>{
                 Log.d("affichage",text.toString());
                 text.setText(it.next().toString());
                 text.setFocusableInTouchMode(true);
-                
                 this.layout.addView(text);
             }
         }catch(Exception e){
