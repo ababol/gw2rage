@@ -50,5 +50,25 @@ public class Event {
         stringified += " "+this.placeTotal + " "+this.coutInscription+"po";
         return stringified;
     }
+
+    public int getCoutInscription() {
+        return coutInscription;
+    }
+
+    public Date getDateEvent() {
+        return dateEvent;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNomEvent() {
+        return nomEvent;
+    }
+
+    public int getPlaceTotal() {
+        return placeTotal;
+    }
     
 }

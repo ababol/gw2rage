@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockActivity;
 
 /**
  *
@@ -44,5 +43,5 @@ public class EventOnMenuListener  implements TabListener{
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
 }
