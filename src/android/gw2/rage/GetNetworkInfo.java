@@ -4,6 +4,7 @@
  */
 package android.gw2.rage;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -26,20 +27,26 @@ import java.util.ListIterator;
  *
  * @author isen
  */
-public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Event>>{
+public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Record>>{
     private ViewGroup layout;
     private JSONDatasHandler handler;
     private LayoutInflater inflater;
+    private RecordViewFactory factory;
+    private ArrayList<Record> result;
+    private Activity activity;
     /**
      * 
      * @param tv the text view where datas must be written, if an error rises
      * it will be written in this text view
      * @param handler will handle the response
      */
-    GetNetworkInfo(ViewGroup layout,LayoutInflater li,JSONDatasHandler handler){
+    GetNetworkInfo(ViewGroup layout, Activity ac, JSONDatasHandler handler, android.gw2.rage.RecordViewFactory factory){
        this.layout = layout;
-       this.inflater = li;
+       this.inflater = ac.getLayoutInflater();
+       this.activity = ac;
        this.handler = handler;
+       this.result = new ArrayList<Record>();
+       this.factory=factory;
     }
   
     @Override
@@ -55,7 +62,7 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Event>>{
         }
     }
     @Override
-    protected ArrayList<Event> doInBackground(String... urls) {
+    protected ArrayList<Record> doInBackground(String... urls) {
             String response = "";
             for (String url : urls) {
                     DefaultHttpClient client = new DefaultHttpClient();
@@ -79,37 +86,29 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Event>>{
                 Log.d("network response", response);
                 JSONArray parsedResponse = new JSONArray(response);
                 
-                ArrayList<Object>objects = this.handler.handleArray(parsedResponse);
-                ArrayList<Event> eventCollection = new ArrayList<Event>();
-                for(int i=0 ; i< objects.size(); i++ ){
-                    eventCollection.add((Event) objects.get(i));
-                }
-                return eventCollection;
+                this.result.addAll(this.handler.handleArray(parsedResponse));
+                Log.d("JSON parsing ","number of events " + this.result.size());
+                return this.result;
             }catch (Exception e){
                 
-                Log.v("JSON parsing", "le JSON envoyé est mal formé "+e.toString());
+                Log.d("JSON parsing", "le JSON envoyé est mal formé "+e.toString());
             }
-            return new ArrayList<Event>();
+            return new ArrayList<Record>();
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Event> result) {
+    protected void onPostExecute(ArrayList<Record> result) {
         this.layout.removeAllViews();
-        ListIterator<Event> it = result.listIterator();
+         ListIterator<Record> it = result.listIterator();
+         Log.d("after parsing","number of events "+result.size());
         try{
             while(it.hasNext()){
-                
-//                Log.d("affichage",this.inflater.toString());
-//                View temp = this.inflater.inflate(R.id.TextView01, null);
-//                Log.d("affichage",temp.toString());
-                TextView text =new TextView(this.inflater.getContext());
-                Log.d("affichage",text.toString());
-                text.setText(it.next().toString());
-                text.setFocusableInTouchMode(true);
-                this.layout.addView(text);
+                Record current = it.next();
+                RecordView rv = this.factory.generateView(current, this.activity);
+                rv.drawView(this.layout);
             }
         }catch(Exception e){
-            Log.d("affichage", this.layout.toString());
+//            Log.d("affichage", this.layout.toString());
             Log.v("affichage", e.toString());
         }
     }

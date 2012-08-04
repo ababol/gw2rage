@@ -11,7 +11,7 @@ import android.util.Log;
  *
  * @author artragis
  */
-public class Event {
+public class Event extends Record{
     private Date dateEvent;
     private int placeTotal;
     private String nomEvent;

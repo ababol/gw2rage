@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * @author isen
  */
 public interface JSONDatasHandler {
-    public ArrayList<Object> handleArray(JSONArray ja);
+    public ArrayList<Record> handleArray(JSONArray ja);
     /**
      * 
      * @param jo
