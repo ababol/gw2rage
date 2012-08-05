@@ -9,8 +9,8 @@ import org.json.JSONObject;
  * @author artragis
  */
 public class MemberManager implements JSONDatasHandler{
-    public ArrayList<Object> handleArray(JSONArray ja){
-        return new ArrayList<Object>();
+    public ArrayList<Record> handleArray(JSONArray ja){
+        return new ArrayList<Record>();
     }
     public Object handleObject(JSONObject jo){
         return "";

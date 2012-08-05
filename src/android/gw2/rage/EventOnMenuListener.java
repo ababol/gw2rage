@@ -39,7 +39,6 @@ public class EventOnMenuListener  implements TabListener{
         sv.addView(v);
         //setContentView(sv);
         this.ac.setContentView(sv);
-        ArrayList<Record> datas = new ArrayList<Record>();
         GetNetworkInfo task = new GetNetworkInfo(v,this.ac, handler,new EventListViewFactory());
         task.execute(new String[] { lien });
         

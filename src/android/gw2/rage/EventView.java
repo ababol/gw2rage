@@ -6,9 +6,13 @@ package android.gw2.rage;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import java.util.ArrayList;
 /**
  *
  * @author artragis
@@ -32,7 +36,14 @@ abstract public class EventView extends RecordView{
 
 
         public void onClick(View v) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            ScrollView sv =new ScrollView(this.activity.getBaseContext());
+        String lien = "http://www.guildwars2-rage.com/rage/site/api/event/";
+        EventManager handler = new EventManager();
+
+        //setContentView(sv);
+        this.activity.setContentView(sv);
+        GetNetworkInfo task = new GetNetworkInfo(sv,this.activity, handler,new EventFullViewFactory());
+        task.execute(new String[] { lien });
         }
         
     }
