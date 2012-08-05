@@ -8,7 +8,7 @@ import android.util.Log;
  *
  * @author artragis
  */
-class News extends Record{
+public class News extends Record{
     protected String title;
     protected int topic_id ;
     protected Date startdate;
