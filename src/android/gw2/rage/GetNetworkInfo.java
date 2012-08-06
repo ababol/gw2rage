@@ -106,6 +106,7 @@ public class GetNetworkInfo  extends AsyncTask<String, Void, ArrayList<Record>>{
                 Record current = it.next();
                 RecordView rv = this.factory.generateView(current, this.activity);
                 rv.drawView(this.layout);
+                
             }
         }catch(Exception e){
 //            Log.d("affichage", this.layout.toString());

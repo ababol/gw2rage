@@ -15,7 +15,7 @@ public class NewsListViewFactory extends RecordViewFactory{
 
     @Override
     RecordView generateView(Record r, Activity ac) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new NewsListView((News) r,ac);
     }
 
     @Override
