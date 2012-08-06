@@ -34,6 +34,7 @@ public class NewsListView extends NewsView{
         TextView vue= new TextView(this.activity);
         vue.setText(chaine);
         parent.addView(vue);
+        vue.setOnClickListener(new NewsView.ListOnClickListener(this.news, this.activity));
         return parent;
     }
     

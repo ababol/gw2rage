@@ -4,12 +4,17 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:id="@+id/fulleventlayout"
+    
     >
         <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content" 
-        android:id="@+id/titre_event"
-        ></TextView>
+        android:id="@+id/titre_news" 
+        android:textStyle="bold"></TextView>
         <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/info_event"></TextView>
+        android:id="@+id/info_news"
+        android:textStyle="italic"></TextView>
+        <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenu_news"></TextView>
 </LinearLayout>
