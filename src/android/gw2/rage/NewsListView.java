@@ -28,13 +28,16 @@ public class NewsListView extends NewsView{
     @Override
     public ViewGroup drawView(ViewGroup parent) {
         String chaine="";
+        this.activity.
+                getLayoutInflater().inflate(R.layout.eventlistview, parent);
+        LinearLayout contener = (LinearLayout)parent.getChildAt(parent.getChildCount()-1);
         chaine += this.news.getTitle();
         chaine +=" par "+this.news.getAuthor_name();
         chaine +=" le "+this.news.getStartdate().toString();
         TextView vue= new TextView(this.activity);
         vue.setText(chaine);
-        parent.addView(vue);
-        vue.setOnClickListener(new NewsView.ListOnClickListener(this.news, this.activity));
+        contener.addView(vue);
+        contener.setOnClickListener(new NewsView.ListOnClickListener(this.news, this.activity));
         return parent;
     }
     

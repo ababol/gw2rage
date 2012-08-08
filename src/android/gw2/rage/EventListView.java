@@ -24,6 +24,7 @@ public class EventListView extends EventView {
         Log.d("affichage_no_arg",this.event.toString());
         LinearLayout contener = new LinearLayout(this.activity.getBaseContext());
         contener.setOnClickListener(new EventView.ListOnClickListener(this.event, this.activity));
+        
         this.addView(contener);
         this.activity.setContentView(this);
         
@@ -33,14 +34,17 @@ public class EventListView extends EventView {
     @Override
     public ViewGroup drawView(ViewGroup parent) {
         Log.d("affichage",this.event.toString());
-        LinearLayout contener = new LinearLayout(this.activity);
+        this.activity.
+                getLayoutInflater().inflate(R.layout.eventlistview, parent);
+        LinearLayout contener = (LinearLayout)parent.getChildAt(parent.getChildCount()-1);
         contener.setOnClickListener(new EventView.ListOnClickListener(this.event, this.activity));
 //        this.addView(contener);
         TextView desc = new TextView(this.activity);
         desc.setText(this.event.toString());
+//        desc.setTextSize(2, 50);
         
         contener.addView(desc);
-        parent.addView(contener);
+//        parent.addView(contener);
         
         return contener;
     }
