@@ -31,6 +31,7 @@ public class Gw2rageActivity extends SherlockActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("create","hello");
         setContentView(R.layout.main);
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ArrayList<SubActivity> menuList = new ArrayList<SubActivity>();
@@ -40,12 +41,30 @@ public class Gw2rageActivity extends SherlockActivity implements
                 ActionBar.Tab tab = getSupportActionBar().newTab();
                 tab.setText(menuList.get(i).getTitle());
                 tab.setTabListener(menuList.get(i).getListener());
-
+                
                 getSupportActionBar().addTab(tab);
+                if(savedInstanceState != null && savedInstanceState.containsKey("selected_tab")){
+                    Log.d("create","selected_tab_here");
+                    if(i==savedInstanceState.getInt("selected_tab")){
+                        tab.select();
+                    }
+                }
         }
-      
     }
-    
+      @Override
+    public void onSaveInstanceState(Bundle instance){
+        
+        super.onSaveInstanceState(instance);
+       Log.v("onsave_prepend", instance.toString());
+        instance.putInt("selected_tab",this.getSupportActionBar()
+                                                .getSelectedNavigationIndex());
+        Log.v("onsave_apend", instance.toString());
+    }
+      @Override 
+      public void onRestoreInstanceState(Bundle savedInstanceState){
+          super.onRestoreInstanceState(savedInstanceState);
+          
+      }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //            MenuInflater inflater = getMenuInflater();
