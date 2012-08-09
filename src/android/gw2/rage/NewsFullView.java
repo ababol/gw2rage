@@ -7,7 +7,7 @@ package android.gw2.rage;
 import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.text.Html;
 /**
  *
  * @author isen
@@ -31,7 +31,7 @@ public class NewsFullView extends NewsView{
         TextView infos = (TextView)this.activity.findViewById(R.id.info_news);
         infos.setText("Par "+this.news.getAuthor_name()+" le "+this.news.getStartdate().toString());
         TextView corps = (TextView)this.activity.findViewById(R.id.contenu_news);
-        corps.setText(this.news.getPost());
+        corps.setText(Html.fromHtml(BBCodeParser.fromBbCode(this.news.getPost())));
         
         return parent;
     }
