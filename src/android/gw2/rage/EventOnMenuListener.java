@@ -36,8 +36,8 @@ public class EventOnMenuListener  implements TabListener{
         ScrollView sv =new ScrollView(this.ac.getBaseContext());
         String lien = "http://www.guildwars2-rage.com/rage/site/api/event/";
         EventManager handler = new EventManager();
-        ViewGroup v = (ViewGroup)new LinearLayout(this.ac.getLayoutInflater().getContext());
-        sv.addView(v);
+       ViewGroup v = (ViewGroup)this.ac.getLayoutInflater().inflate(R.layout.events, sv);
+        v= (ViewGroup)sv.getChildAt(0);
         //setContentView(sv);
         this.ac.setContentView(sv);
         GetNetworkInfo task = new GetNetworkInfo(v,this.ac, handler,new EventListViewFactory());
