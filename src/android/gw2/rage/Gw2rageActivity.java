@@ -25,8 +25,16 @@ import android.widget.ScrollView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import java.util.ArrayList;
+import java.util.Stack;
 public class Gw2rageActivity extends SherlockActivity implements
 		ActionBar.TabListener {
+    private Stack<Integer> previousTab ;
+    
+   public Gw2rageActivity(){
+       super();
+       this.previousTab = new Stack();
+       this.previousTab.push(-1);
+   }
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,76 +73,40 @@ public class Gw2rageActivity extends SherlockActivity implements
           super.onRestoreInstanceState(savedInstanceState);
           
       }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//            MenuInflater inflater = getMenuInflater();
-//            inflater.inflate(R.menu.mainmenu, menu);
-//
-//            return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        String lien;
-//        JSONDatasHandler handler;
-//        int layout;
-//        LayoutInflater li = (LayoutInflater) this.getLayoutInflater();
-//        try{
-//            ScrollView sv =new ScrollView(this);
-//            
-//            switch (item.getItemId()) {
-//            case R.id.menuitem1:
-//                layout = R.layout.status;
-//
-//                lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
-//                handler = new StatusManager();
-//
-//
-//
-//                /**
-//                    * @TODO show here the score, number of members... of the guild
-//                    */
-//                break;
-//            case R.id.menuitem2:
-//                lien = "http://www.guildwars2-rage.com/rage/site/api/event/";
-//                handler = new EventManager();
-//                layout = R.layout.events;
-//                break;
-//
-//            default:
-//                lien = "http://www.guildwars2-rage.com/rage/appli/status.php";//check the name
-//                handler = new StatusManager();
-//                layout = R.layout.status;
-//                break;
-//            }
-//
-//
-//                setContentView(sv);
-//                sv.removeAllViews();
-//                
-//                ViewGroup v = (ViewGroup)new LinearLayout(this);
-//                
-//                //sv.addView(v);
-////                    sv.addView(v);
-//
-//                GetNetworkInfo task = new GetNetworkInfo(v,li, handler);
-//                task.execute(new String[] { lien });
-//                            
-//        }catch(Exception e){
-//
-//            Log.v("Menu", e.toString() +" "+e.getMessage());
-//        }
-//		return true;
-//    }
+      
+      @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(this.previousTab.peek() == -1){
+                moveTaskToBack(true);
+            }
+            else{
+                
+                getSupportActionBar().getTabAt(this.previousTab.pop()).select();
+                this.previousTab.pop();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+      
+
     @Override
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction transaction) {
 	}
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction transaction) {
+            
 //		mSelected.setText("Selected: " + tab.getText());
 	}
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction transaction) {
 	}
+        
+        public void addTabToHistory(Integer tabIndex){
+            Log.d("addToHistory", this.previousTab.toString());
+            this.previousTab.push(tabIndex);
+        }
 }
