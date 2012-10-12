@@ -18,8 +18,8 @@ import java.util.ArrayList;
  * @author isen
  */
 public class NewsOnMenuListener implements TabListener{
-private Activity ac;
-    public NewsOnMenuListener(Activity ac){
+private Gw2rageActivity ac;
+    public NewsOnMenuListener(Gw2rageActivity ac){
         this.ac = ac;
     }
     public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -27,6 +27,7 @@ private Activity ac;
     }
 
      public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        this.ac.addTabToHistory(tab.getPosition());
         ScrollView sv =new ScrollView(this.ac.getBaseContext());
         String lien = "http://www.guildwars2-rage.com/rage/site/api/news/";
         NewsManager handler = new NewsManager();
